@@ -83,37 +83,14 @@ lazy val loggingDependencies = List(
   "ch.qos.logback" %  "logback-classic" % "1.1.7"
 )
 
-lazy val metricsDependencies = List(
-  Dependencies.kamonCore,
-  Dependencies.kamonStatsd,
-  Dependencies.kamonAkkaHttp
-)
-
 lazy val dbDependencies = List(
   Dependencies.hikariCP,
   Dependencies.postgres
 )
 
-lazy val forkliftDependencies = List(
-  Dependencies.scalaforklift,
-  Dependencies.slickMigrationAPI
-)
-
-lazy val testDependencies = List(
-    Dependencies.scalatest,
-    Dependencies.geotrellisRasterTestkit,
-    Dependencies.akkatestkit
-)
-
 lazy val root = Project("root", file("."))
   .aggregate(database)
   .settings(commonSettings:_*)
-
-lazy val migrations = Project("migrations", file("migrations"))
-  .settings(commonSettings:_*)
-  .settings({
-    libraryDependencies ++= dbDependencies ++ forkliftDependencies ++ loggingDependencies
-  })
 
 lazy val database = Project("database", file("database"))
   .settings(commonSettings:_*)
