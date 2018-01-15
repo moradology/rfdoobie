@@ -96,6 +96,10 @@ lazy val database = Project("database", file("database"))
   .settings(commonSettings:_*)
   .settings({
      libraryDependencies ++= dbDependencies ++ loggingDependencies ++ Seq(
+       Dependencies.doobieCore,
+       Dependencies.doobieHikari,
+       Dependencies.doobieSpecs,
+       Dependencies.doobieScalatest
      )
   })
 

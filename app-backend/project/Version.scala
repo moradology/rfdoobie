@@ -46,4 +46,5 @@ object Version {
   val nimbusJose         = "0.6.0"
   val auth0              = "1.5.0"
   val slickMigrationAPI  = "0.4.0"
+  val doobie             = "0.5.0-M13"
 }
