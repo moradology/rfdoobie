@@ -1,0 +1,48 @@
+#!/bin/bash
+set -e
+
+if [[ -n "${RF_DEBUG}" ]]; then
+    set -x
+fi
+
+GIT_COMMIT="${GIT_COMMIT:-latest}"
+
+function usage() {
+    echo -n \
+"Usage: $(basename "$0")
+Run various test suites.
+"
+}
+
+if [ "${BASH_SOURCE[0]}" = "${0}" ]
+then
+    if [ "${1:-}" = "--help" ]
+    then
+        usage
+    else
+        if which shellcheck &>/dev/null; then
+            echo "Linting STRTA scripts"
+            find ./scripts -type f -print0 | xargs -0 -r shellcheck
+        fi
+
+        echo "Updating Scala dependencies"
+        docker-compose \
+            run --rm --no-deps api-server update
+
+        echo "Linting Scala source code"
+        docker-compose \
+            run --rm --no-deps api-server scapegoat
+
+        echo "Executing Scala test suite"
+        docker-compose \
+            run --rm api-server test
+
+        # TODO: https://github.com/azavea/raster-foundry/issues/435
+        # echo "Executing JavaScript test suite"
+        # docker-compose \
+        #     -f "${DIR}/../docker-compose.yml" \
+        #     -f "${DIR}/../docker-compose.test.yml" \
+        #     run --rm app-frontend run test
+    fi
+    exit
+fi

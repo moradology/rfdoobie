@@ -1,2 +1,14 @@
+# Scala
 *.class
 *.log
+
+# RF specific
+*.pgdump
+scratch/
+/data
+/.env
+.sbt/
+target/
+.lib/
+dist/*
+
