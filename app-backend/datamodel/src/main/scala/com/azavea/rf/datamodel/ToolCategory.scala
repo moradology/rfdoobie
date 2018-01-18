@@ -6,10 +6,10 @@ import io.circe.generic.JsonCodec
 
 /** A user generate category to track tools in the Raster Foundry lab
   *
-  * @param id UUID Unique identifier for Tool Category
+  * @param slugLabel
   * @param createdAt Timestamp Creation time for category
-  * @param modifiedAt Timestamp Modification time for category
   * @param createdBy String User ID that owns/created category
+  * @param modifiedAt Timestamp Modification time for category
   * @param modifiedBy String User ID that last modified category
   * @param category String Category that is displayed to user
   */
@@ -17,8 +17,8 @@ import io.circe.generic.JsonCodec
 case class ToolCategory(
     slugLabel: String,
     createdAt: Timestamp,
-    modifiedAt: Timestamp,
     createdBy: String,
+    modifiedAt: Timestamp,
     modifiedBy: String,
     category: String
 )
@@ -55,8 +55,8 @@ object ToolCategory {
       ToolCategory(
         toSlugLabel(category),
         now,
-        now,
         userId,
+        now,
         userId,
         category
       )

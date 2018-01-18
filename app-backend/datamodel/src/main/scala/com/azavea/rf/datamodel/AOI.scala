@@ -21,8 +21,8 @@ case class AOI(
   /* Database fields */
   id: UUID,
   createdAt: Timestamp,
-  modifiedAt: Timestamp,
   createdBy: String,
+  modifiedAt: Timestamp,
   modifiedBy: String,
   organizationId: UUID,
   owner: String,
@@ -49,8 +49,8 @@ object AOI {
       val ownerId = checkOwner(user, this.owner)
 
       AOI(
-        UUID.randomUUID, now, now, organizationId,
-        user.id, user.id, ownerId, area, filters
+        UUID.randomUUID, now, user.id, now, user.id,
+        organizationId, ownerId, area, filters
       )
     }
   }

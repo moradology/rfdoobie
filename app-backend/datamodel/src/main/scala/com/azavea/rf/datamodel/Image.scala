@@ -10,10 +10,10 @@ import io.circe.generic.JsonCodec
 case class Image(
   id: UUID,
   createdAt: Timestamp,
-  modifiedAt: Timestamp,
-  organizationId: UUID,
   createdBy: String,
+  modifiedAt: Timestamp,
   modifiedBy: String,
+  organizationId: UUID,
   owner: String,
   rawDataBytes: Long,
   visibility: Visibility,
@@ -27,10 +27,10 @@ case class Image(
   def withRelatedFromComponents(bands: Seq[Band]): Image.WithRelated = Image.WithRelated(
     this.id,
     this.createdAt,
-    this.modifiedAt,
-    this.organizationId,
     this.createdBy,
+    this.modifiedAt,
     this.modifiedBy,
+    this.organizationId,
     this.owner,
     this.rawDataBytes,
     this.visibility,
@@ -71,10 +71,10 @@ object Image {
       Image(
         UUID.randomUUID, // primary key
         now, // createdAt
-        now, // modifiedAt
-        organizationId,
         user.id, // createdBy: String,
+        now, // modifiedAt
         user.id, // modifiedBy: String,
+        organizationId,
         ownerId, // owner: String
         rawDataBytes,
         visibility,
@@ -123,10 +123,10 @@ object Image {
   case class WithRelated(
     id: UUID,
     createdAt: Timestamp,
-    modifiedAt: Timestamp,
-    organizationId: UUID,
     createdBy: String,
+    modifiedAt: Timestamp,
     modifiedBy: String,
+    organizationId: UUID,
     owner: String,
     rawDataBytes: Long,
     visibility: Visibility,
@@ -142,10 +142,10 @@ object Image {
     def toImage: Image = Image(
       id,
       createdAt,
-      modifiedAt,
-      organizationId,
       createdBy,
+      modifiedAt,
       modifiedBy,
+      organizationId,
       owner,
       rawDataBytes,
       visibility,
@@ -160,10 +160,10 @@ object Image {
     def toDownloadable(downloadUri: String): Image.WithRelatedDownladable = Image.WithRelatedDownladable(
       this.id,
       this.createdAt,
-      this.modifiedAt,
-      this.organizationId,
       this.createdBy,
+      this.modifiedAt,
       this.modifiedBy,
+      this.organizationId,
       this.owner,
       this.rawDataBytes,
       this.visibility,
@@ -197,10 +197,10 @@ object Image {
   case class WithRelatedDownladable(
     id: UUID,
     createdAt: Timestamp,
-    modifiedAt: Timestamp,
-    organizationId: UUID,
     createdBy: String,
+    modifiedAt: Timestamp,
     modifiedBy: String,
+    organizationId: UUID,
     owner: String,
     rawDataBytes: Long,
     visibility: Visibility,
