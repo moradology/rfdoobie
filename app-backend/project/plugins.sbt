@@ -5,7 +5,7 @@ resolvers ++= Seq(
 
 resolvers += Resolver.bintrayIvyRepo("kamon-io", "sbt-plugins")
 
-addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.1")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.2")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.3")
 

@@ -25,9 +25,9 @@ then
             find ./scripts -type f -print0 | xargs -0 -r shellcheck
         fi
 
-        echo "Executing Scala test suite"
+        echo "Linting Scala source code"
         docker-compose \
-            run --rm api-server "project database" test
+            run --rm --no-deps api-server scapegoat
 
         # TODO: https://github.com/azavea/raster-foundry/issues/435
         # echo "Executing JavaScript test suite"

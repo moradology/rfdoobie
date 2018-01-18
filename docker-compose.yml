@@ -31,7 +31,8 @@ services:
       - ./app-backend/:/opt/raster-foundry/app-backend/
       - ./scratch/:/opt/raster-foundry/scratch/
       - ./.sbt:/root/.sbt
-      - ./.bintray:/root/.bintray
+      - ./.bintray/:/root/.bintray
+      - ~/.ivy2/:/root/.ivy2
       - $HOME/.aws:/root/.aws:ro
     working_dir: /opt/raster-foundry/app-backend/
     entrypoint: ./sbt
