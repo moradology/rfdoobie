@@ -17,7 +17,7 @@ object ImageDao {
         image_metadata, resolution_meters, metadata_files
       FROM
         images
-    """.query[Image]
+    """
   }
 }
 

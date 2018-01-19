@@ -80,18 +80,17 @@ case class AnnotationPropertiesCreate(
 
 object Annotation {
 
-    implicit val config: Configuration = Configuration.default.copy(
-      transformKeys = {
-        case "_type" => "type"
-        case other => other
-      }
-    )
+    //implicit val config: Configuration = Configuration.default.copy(
+    //  transformKeys = {
+    //    case "_type" => "type"
+    //    case other => other
+    //  }
+    //)
 
     def tupled = (Annotation.apply _).tupled
     def create = Create.apply _
 
 
-    @ConfiguredJsonCodec
     case class GeoJSON(
         id: UUID,
         geometry: Option[Projected[Geometry]],

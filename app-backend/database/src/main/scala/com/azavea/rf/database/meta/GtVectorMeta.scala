@@ -21,7 +21,7 @@ import scala.reflect.ClassTag
 
 trait GtVectorMeta {
 
-  implicit val jtsGeometryType = Meta.other[JtsGeometry]("geometry")
+  private val jtsGeometryType = Meta.other[JtsGeometry]("geometry")
 
   // Constructor for geometry types via the `Geometry` member of JTSgeometry
   private def geometryType[A >: Null <: geom.Geometry: TypeTag, B >: Null <: Geometry: TypeTag](wrapperF: A => B)(implicit A: ClassTag[A]): Meta[B] =
@@ -48,6 +48,4 @@ trait GtVectorMeta {
   implicit val PointType              = geometryType[geom.Point, Point](Point.apply _)
 
 }
-
-object GtVectorMeta extends GtVectorMeta
 

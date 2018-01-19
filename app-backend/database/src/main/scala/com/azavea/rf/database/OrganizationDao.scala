@@ -15,7 +15,7 @@ object OrganizationDao {
         id, created_at, modified_at, name
       FROM
         organizations
-    """.query[Organization]
+    """
   }
 }
 

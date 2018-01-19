@@ -17,7 +17,7 @@ object ExportDao {
         visibility, tool_run_id, exportOptions
       FROM
         exports
-    """.query[Export]
+    """
   }
 }
 

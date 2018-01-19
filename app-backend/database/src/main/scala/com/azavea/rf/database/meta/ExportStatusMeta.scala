@@ -25,4 +25,3 @@ trait ExportStatusEnumMeta {
   )
 }
 
-object ExportStatusEnumMeta extends ExportStatusEnumMeta

@@ -28,7 +28,7 @@ object AnnotationDao {
         quality, geometry
       FROM
         annotations
-    """.query[Annotation]
+    """
   }
 }
 

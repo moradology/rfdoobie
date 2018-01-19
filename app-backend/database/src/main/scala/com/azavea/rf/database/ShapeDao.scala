@@ -16,7 +16,7 @@ object ShapeDao {
         organization_id, name, description, geometry
       FROM
         shapes
-    """.query[Shape]
+    """
   }
 }
 

@@ -31,4 +31,3 @@ trait CirceJsonbMeta {
   )
 }
 
-object CirceJsonbMeta extends CirceJsonbMeta

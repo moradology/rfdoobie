@@ -19,7 +19,7 @@ object SceneDao {
         status_fields
       FROM
         scenes
-    """.query[Scene]
+    """
   }
 }
 

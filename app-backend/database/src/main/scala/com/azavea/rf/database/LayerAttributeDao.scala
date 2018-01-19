@@ -15,7 +15,7 @@ object LayerAttributeDao {
         layer_name, zoom, name, value
       FROM
         layer_attributes
-    """.query[LayerAttribute]
+    """
   }
 }
 

@@ -16,7 +16,7 @@ object MapTokenDao {
         owner, organization_id, name, project, tool_run
       FROM
         map_tokens
-    """.query[MapToken]
+    """
   }
 }
 

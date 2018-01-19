@@ -25,4 +25,3 @@ trait VisibilityEnumMeta {
   )
 }
 
-object VisibilityEnumMeta extends VisibilityEnumMeta

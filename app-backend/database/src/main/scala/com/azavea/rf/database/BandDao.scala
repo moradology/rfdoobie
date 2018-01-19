@@ -15,7 +15,7 @@ object BandDao {
         id, image_id, name, number, wavelength from bands
       FROM
         bands
-    """.query[Band]
+    """
   }
 }
 

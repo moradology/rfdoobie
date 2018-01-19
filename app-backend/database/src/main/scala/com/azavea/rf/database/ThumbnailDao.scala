@@ -16,7 +16,7 @@ object ThumbnailDao {
         scene_id, url, thumbnail_size
       FROM
         thumbnails
-    """.query[Thumbnail]
+    """
   }
 }
 

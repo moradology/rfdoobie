@@ -65,18 +65,17 @@ case class ShapePropertiesCreate(
 
 object Shape {
 
-    implicit val config: Configuration = Configuration.default.copy(
-      transformKeys = {
-        case "_type" => "type"
-        case other => other
-      }
-    )
+    //implicit val config: Configuration = Configuration.default.copy(
+    //  transformKeys = {
+    //    case "_type" => "type"
+    //    case other => other
+    //  }
+    //)
 
     def tupled = (Shape.apply _).tupled
     def create = Create.apply _
 
 
-    @ConfiguredJsonCodec
     case class GeoJSON(
         id: UUID,
         geometry: Option[Projected[Geometry]],

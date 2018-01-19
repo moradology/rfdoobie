@@ -16,7 +16,7 @@ object ProjectDao {
         owner, organization_id, name, project, tool_run
       FROM
         projects
-    """.query[Project]
+    """
   }
 }
 

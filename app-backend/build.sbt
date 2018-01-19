@@ -85,8 +85,8 @@ lazy val database = Project("database", file("database"))
        Dependencies.doobieSpecs,
        Dependencies.doobieScalatest,
        Dependencies.doobiePostgres,
-       "net.postgis" % "postgis-jdbc" % "1.3.3",
-       "net.postgis" % "postgis-jdbc-jtsparser" % "1.3.3",
+       "net.postgis" % "postgis-jdbc" % "2.2.1",
+       "net.postgis" % "postgis-jdbc-jtsparser" % "2.2.1",
        "org.locationtech.jts" % "jts-core" % "1.15.0"
      )
   })

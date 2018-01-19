@@ -16,12 +16,12 @@ import io.circe.generic.extras._
 
 object GeoJsonCodec {
 
-  implicit val config: Configuration = Configuration.default.copy(
-    transformKeys = {
-      case "_type" => "type"
-      case other => other
-    }
-  )
+  //implicit val config: Configuration = Configuration.default.copy(
+  //  transformKeys = {
+  //    case "_type" => "type"
+  //    case other => other
+  //  }
+  //)
 
   def fromPaginatedResponseToGeoJson[T1 <: GeoJSONSerializable[T2], T2 <: GeoJSONFeature](resp: PaginatedResponse[T1]): PaginatedGeoJsonResponse[T2] = {
     PaginatedGeoJsonResponse[T2](
@@ -35,7 +35,6 @@ object GeoJsonCodec {
     )
   }
 
-  @ConfiguredJsonCodec
   case class PaginatedGeoJsonResponse[T <: GeoJSONFeature](
     count: Int,
     hasPrevious: Boolean,

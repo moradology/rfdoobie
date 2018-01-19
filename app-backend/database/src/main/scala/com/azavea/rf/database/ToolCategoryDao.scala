@@ -15,7 +15,7 @@ object ToolCategoryDao {
         slug_label, created_at, created_by, modified_at, modified_by, category
       FROM
         tool_categories
-    """.query[ToolCategory]
+    """
   }
 }
 

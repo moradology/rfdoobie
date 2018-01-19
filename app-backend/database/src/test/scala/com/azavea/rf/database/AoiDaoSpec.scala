@@ -29,6 +29,7 @@ class AoiDaoSpec extends FunSuite with Matchers with IOChecker {
 
   test("timestamp")  { check(timestamp) }
 
-  test("aoi")        { check(AoiDao.Statements.select) }
+  test("aoi")        { check(AoiDao.Statements.select.query[AOI]) }
 
 }
+

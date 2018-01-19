@@ -16,7 +16,7 @@ object DatasourceDao {
         organization_id, name, visibility, composites, extras, bands
       FROM
         datasources
-    """.query[Datasource]
+    """
   }
 }
 

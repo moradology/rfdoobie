@@ -14,7 +14,7 @@ object FeatureFlagtDao {
         id, key, active, name, description
       FROM
         feature_flags
-    """.query[FeatureFlag]
+    """
   }
 }
 
