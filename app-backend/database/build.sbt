@@ -5,7 +5,7 @@ import doobie.hikari._, doobie.hikari.implicits._
 import doobie.postgres._, doobie.postgres.implicits._
 import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import com.azavea.rf.datamodel._
-import com.azavea.rf.database.tables._
+import com.azavea.rf.database.meta._
 
 // implicit transactor for console testing
 val xa = Transactor.fromDriverManager[IO](
@@ -24,3 +24,6 @@ val y = xa.yolo; import y._
 //  a  <- q.transact(xa) guarantee xa.shutdown
 //} yield a
 """
+
+testOptions in Test += Tests.Argument("-oD")
+
