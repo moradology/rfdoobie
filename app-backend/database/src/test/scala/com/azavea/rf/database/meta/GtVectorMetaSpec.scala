@@ -7,12 +7,9 @@ import com.azavea.rf.database.meta.RFMeta._
 import doobie._, doobie.implicits._
 import cats._, cats.data._, cats.effect.IO
 import cats.syntax.either._
-import doobie.postgres._, doobie.postgres.implicits._//, doobie.postgres.pgisimplicits._
-import doobie.util.invariant.InvalidObjectMapping
+import doobie.postgres._, doobie.postgres.implicits._
 import doobie.scalatest.imports._
 import org.scalatest._
-import com.vividsolutions.jts.geom
-//import org.postgis.Point
 import geotrellis.vector._
 import geotrellis.slick.Projected
 

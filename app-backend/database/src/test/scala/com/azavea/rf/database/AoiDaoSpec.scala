@@ -17,6 +17,6 @@ class AoiDaoSpec extends FunSuite with Matchers with IOChecker {
     "org.postgresql.Driver", "jdbc:postgresql://database.service.rasterfoundry.internal/", "rasterfoundry", "rasterfoundry"
   )
 
-  test("aoi") { check(AoiDao.Statements.select.query[AOI]) }
+  test("select") { check(AoiDao.Statements.select.query[AOI]) }
 }
 

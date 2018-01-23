@@ -7,7 +7,7 @@ import doobie._, doobie.implicits._
 import doobie.postgres._, doobie.postgres.implicits._
 import cats._, cats.data._, cats.effect.IO, cats.implicits._
 
-object FeatureFlagtDao {
+object FeatureFlagDao {
   object Statements {
     val select = sql"""
       SELECT

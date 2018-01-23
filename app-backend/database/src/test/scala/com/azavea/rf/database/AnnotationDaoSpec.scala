@@ -17,6 +17,6 @@ class AnnotationDaoSpec extends FunSuite with Matchers with IOChecker {
     "org.postgresql.Driver", "jdbc:postgresql://database.service.rasterfoundry.internal/", "rasterfoundry", "rasterfoundry"
   )
 
-  test("annotation") { check(AnnotationDao.Statements.select.query[Annotation]) }
+  test("select") { check(AnnotationDao.Statements.select.query[Annotation]) }
 }
 

@@ -1,0 +1,33 @@
+package com.azavea.rf.database.meta
+
+import com.azavea.rf.datamodel._
+
+import doobie._, doobie.implicits._
+import doobie.postgres._, doobie.postgres.implicits._
+import doobie.util.invariant.InvalidObjectMapping
+import cats._, cats.data._, cats.effect.IO
+
+
+trait EnumMeta {
+  implicit val annotationQualityMeta: Meta[AnnotationQuality] =
+    pgEnumString("AnnotationQuality", AnnotationQuality.fromString, _.repr)
+
+  implicit val visibilityMeta: Meta[Visibility] =
+    pgEnumString("Visibility", Visibility.fromString, _.repr)
+
+  implicit val jobStatusMeta: Meta[JobStatus] =
+    pgEnumString("JobStatus", JobStatus.fromString, _.repr)
+
+  implicit val ingestStatusMeta: Meta[IngestStatus] =
+    pgEnumString("IngestStatus", IngestStatus.fromString, _.repr)
+
+  implicit val exportStatusMeta: Meta[ExportStatus] =
+    pgEnumString("ExportStatus", ExportStatus.fromString, _.repr)
+
+  implicit val exportTypeMeta: Meta[ExportType] =
+    pgEnumString("ExportType", ExportType.fromString, _.repr)
+
+  implicit val thumbnailSizeMeta: Meta[ThumbnailSize] =
+    pgEnumString("ThumbnailSize", ThumbnailSize.fromString, _.repr)
+}
+

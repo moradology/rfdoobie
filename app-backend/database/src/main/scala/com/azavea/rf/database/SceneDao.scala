@@ -14,9 +14,10 @@ object SceneDao {
       SELECT
         id, created_at, created_by, modified_at, modified_by, owner,
         organization_id, ingest_size_bytes, visibility, tags,
-        datasource, scene_metadata, name, title_footprint,
-        data_footprint, metadata_files, ingest_location, filter_fields,
-        status_fields
+        datasource, scene_metadata, name, tile_footprint,
+        data_footprint, metadata_files, ingest_location, cloud_cover,
+        acquisition_date, sun_azimuth, sun_elevation, thumbnail_status,
+        boundary_status, ingest_status
       FROM
         scenes
     """
