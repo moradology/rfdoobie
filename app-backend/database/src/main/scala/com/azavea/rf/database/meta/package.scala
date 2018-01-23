@@ -2,7 +2,7 @@ package com.azavea.rf.database
 
 
 package object meta {
-  trait RFMeta extends GtVectorMeta
+  trait RFMeta extends GtWktMeta
       with CirceJsonbMeta
       with VisibilityEnumMeta
       with ExportStatusEnumMeta
