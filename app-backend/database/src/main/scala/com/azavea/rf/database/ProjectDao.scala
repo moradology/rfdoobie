@@ -12,8 +12,11 @@ object ProjectDao {
   object Statements {
     val select = sql"""
       SELECT
-        id, created_at, created_by, modified_at, modified_by,
-        owner, organization_id, name, project, tool_run
+        id, created_at, modified_at, organization_id, created_by,
+        modified_by, owner, name, slug_label, description,
+        visibility, tile_visibility, is_aoi_project,
+        aoi_cadence_millis, aois_last_checked, tags, extent,
+        manual_order, is_single_band, single_band_options
       FROM
         projects
     """

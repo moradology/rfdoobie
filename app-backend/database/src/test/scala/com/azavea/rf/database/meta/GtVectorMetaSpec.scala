@@ -17,7 +17,7 @@ import geotrellis.vector._
 import geotrellis.slick.Projected
 
 
-class JtsGeometryMetaSpec extends FunSpec with Matchers with DBTestConfig {
+class GtVectorMetaSpec extends FunSpec with Matchers with DBTestConfig {
 
   case class GeometryClass(
     id: Int,

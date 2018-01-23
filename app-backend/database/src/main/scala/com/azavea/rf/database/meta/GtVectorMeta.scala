@@ -16,6 +16,7 @@ import org.postgresql.util.PGobject
 import org.{postgis => pg}
 import geotrellis.vector._
 import geotrellis.slick.Projected
+import geotrellis.vector.io.wkt.WKT
 
 import scala.reflect.runtime.universe.TypeTag
 import scala.reflect.ClassTag
@@ -111,5 +112,20 @@ trait GtVectorMeta {
     }
   )
 
+  implicit val geometryMeta = Meta[pg.Geometry].xmap[Projected[Geometry]](
+    pgGeom => {
+      Projected[Geometry](
+        WKT.read(pgGeom.getValue),
+        pgGeom.getSrid
+      )
+    },
+    gtGeom => {
+      val multipoly = new pg.MultiPolygon(gtMPoly.polygons.map(gtPoly2pgPoly))
+      multipoly.setSrid(gtMPoly.srid)
+      multipoly
+    }
+  )
+
 }
+
 

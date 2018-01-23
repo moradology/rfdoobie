@@ -7,7 +7,7 @@ import com.azavea.rf.bridge._
 import cats.implicits._
 import cats.syntax.either._
 import geotrellis.slick.Projected
-import geotrellis.vector.Geometry
+import geotrellis.vector.Polygon
 import geotrellis.vector.io.json.GeoJsonSupport
 import io.circe._
 import io.circe.generic.semiauto._
@@ -15,7 +15,6 @@ import io.circe.generic.JsonCodec
 
 // --- //
 
-@JsonCodec
 case class Project(
   id: UUID,
   createdAt: Timestamp,
@@ -33,7 +32,7 @@ case class Project(
   aoiCadenceMillis: Long, /* Milliseconds */
   aoisLastChecked: Timestamp,
   tags: List[String] = List.empty,
-  extent: Option[Projected[Geometry]] = None,
+  extent: Option[Projected[Polygon]] = None,
   manualOrder: Boolean = true,
   isSingleBand: Boolean = false,
   singleBandOptions: Option[SingleBandOptions.Params]

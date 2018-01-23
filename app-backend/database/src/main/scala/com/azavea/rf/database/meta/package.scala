@@ -6,6 +6,7 @@ package object meta {
       with CirceJsonbMeta
       with VisibilityEnumMeta
       with ExportStatusEnumMeta
+      with SingleBandOptionsMeta
 
   object RFMeta extends RFMeta
 }

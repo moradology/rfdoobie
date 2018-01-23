@@ -19,9 +19,6 @@ import scala.reflect.ClassTag
 
 trait ExportStatusEnumMeta {
   implicit val exportStatusEnumMeta: Meta[ExportStatus] =
-  Meta.other[String]("ExportStatus").xmap[ExportStatus](
-    str => ExportStatus.fromString(str),
-    vis => vis.repr
-  )
+    pgEnumString("ExportStatus", ExportStatus.fromString, _.repr)
 }
 

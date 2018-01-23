@@ -1,6 +1,6 @@
 package com.azavea.rf.database.meta
 
-import com.azavea.rf.datamodel.Visibility
+import com.azavea.rf.datamodel.SingleBandOptions
 
 import doobie._, doobie.implicits._
 import cats._, cats.data._, cats.effect.IO
@@ -10,15 +10,21 @@ import doobie.util.invariant.InvalidObjectMapping
 import org.postgis.jts._
 import com.vividsolutions.jts.geom
 import doobie.scalatest.imports._
-import org.scalatest._
-import org.postgresql.util.PGobject
+import io.circe._
+import io.circe.syntax._
 
 import scala.reflect.runtime.universe.TypeTag
 import scala.reflect.ClassTag
 
 
-trait VisibilityEnumMeta {
-  implicit val visibilityEnumMeta: Meta[Visibility] =
-    pgEnumString("Visibility", Visibility.fromString, _.repr)
+trait SingleBandOptionsMeta extends CirceJsonbMeta {
+  implicit val singleBandOptionsMeta: Meta[SingleBandOptions.Params] =
+    Meta[Json].xmap[SingleBandOptions.Params](
+      _.as[SingleBandOptions.Params] match {
+        case Right(ast) => ast
+        case Left(e) => throw e
+      },
+      _.asJson
+    )
 }
 

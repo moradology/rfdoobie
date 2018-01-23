@@ -28,7 +28,7 @@ case class AOI(
   owner: String,
 
   /* Unique fields */
-  area: MultiPolygon,
+  area: Projected[MultiPolygon],
   filters: Json
 )
 
@@ -40,7 +40,7 @@ object AOI {
 
   case class Create(
     organizationId: UUID,
-    area: MultiPolygon,
+    area: Projected[MultiPolygon],
     filters: Json,
     owner: Option[String]) extends OwnerCheck {
     def toAOI(user: User): AOI = {
