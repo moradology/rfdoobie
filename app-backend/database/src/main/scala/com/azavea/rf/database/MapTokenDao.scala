@@ -13,7 +13,7 @@ object MapTokenDao {
     val select = sql"""
       SELECT
         id, created_at, created_by, modified_at, modified_by,
-        owner, organization_id, name, project, tool_run
+        owner, organization_id, name, project_id, toolrun_id
       FROM
         map_tokens
     """

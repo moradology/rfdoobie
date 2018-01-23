@@ -12,7 +12,7 @@ object BandDao {
   object Statements {
     val select = sql"""
       SELECT
-        id, image_id, name, number, wavelength from bands
+        id, image_id, name, number, wavelength
       FROM
         bands
     """

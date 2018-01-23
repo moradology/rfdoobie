@@ -13,7 +13,7 @@ object ThumbnailDao {
     val select = sql"""
       SELECT
         id, created_at, modified_at, organization_id, width_px, height_px,
-        scene_id, url, thumbnail_size
+        scene, url, thumbnail_size
       FROM
         thumbnails
     """

@@ -14,7 +14,7 @@ object ExportDao {
       SELECT
         id, created_at, created_by, modified_at, modified_by, owner,
         organization_id, project_id, export_status, export_type,
-        visibility, tool_run_id, exportOptions
+        visibility, toolrun_id, export_options
       FROM
         exports
     """
