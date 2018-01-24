@@ -1,24 +1,47 @@
 package com.azavea.rf.database
 
 import com.azavea.rf.database.meta.RFMeta._
-import com.azavea.rf.datamodel.{Annotation, AnnotationQuality}
+import com.azavea.rf.datamodel._
 
 import doobie._, doobie.implicits._
 import doobie.postgres._, doobie.postgres.implicits._
 import cats._, cats.data._, cats.effect.IO, cats.implicits._
+import geotrellis.slick.Projected
+import geotrellis.vector.Geometry
 
 import java.util.UUID
+import java.sql.Timestamp
 
 object AnnotationDao {
   def create(
+    projectId: UUID,
+    user: User,
     owner: Option[String],
     organizationId: UUID,
     label: String,
     description: Option[String],
     machineGenerated: Option[Boolean],
     confidence: Option[Double],
-    quality: Option[AnnotationQuality]
-  ): Annotation = ???
+    quality: Option[AnnotationQuality],
+    geometry: Option[Projected[Geometry]]
+  ): ConnectionIO[Annotation] = {
+    val now = new Timestamp((new java.util.Date()).getTime())
+    val ownerId = Util.checkOwner(user, owner)
+    sql"""
+      INSERT INTO annotations
+        (project_id, created_at, created_by, modified_at, modified_by, owner,
+        organization_id, label, description, machine_generated, confidence,
+        quality, geometry)
+      VALUES
+        (${UUID.randomUUID}, $projectId, $now, ${user.id}, $now, ${user.id}, $ownerId,
+        $organizationId, $label, $description, $machineGenerated, $confidence,
+        $quality, $geometry)
+    """.update.withUniqueGeneratedKeys[Annotation](
+      "id", "project_id", "created_at", "created_by", "modified_at", "modified_by", "owner",
+      "organization_id", "label", "description", "machine_generated", "confidence",
+      "quality", "geometry"
+    )
+  }
 
   object Statements {
     val select = sql"""
