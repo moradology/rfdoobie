@@ -88,7 +88,6 @@ object Annotation {
     //)
 
     def tupled = (Annotation.apply _).tupled
-    def create = Create.apply _
 
 
     case class GeoJSON(
@@ -99,55 +98,8 @@ object Annotation {
     ) extends GeoJSONFeature
 
     @JsonCodec
-    case class Create(
-        owner: Option[String],
-        organizationId: UUID,
-        label: String,
-        description: Option[String],
-        machineGenerated: Option[Boolean],
-        confidence: Option[Double],
-        quality: Option[AnnotationQuality],
-        geometry: Option[Projected[Geometry]]
-    ) extends OwnerCheck {
-
-        def toAnnotation(projectId: UUID, user: User): Annotation = {
-            val now = new Timestamp((new java.util.Date()).getTime())
-            val ownerId = checkOwner(user, this.owner)
-            Annotation(
-                UUID.randomUUID, // id
-                projectId, // projectId
-                now, // createdAt
-                user.id, // createdBy
-                now, // modifiedAt
-                user.id, // modifiedBy
-                ownerId, // owner
-                organizationId,
-                label,
-                description,
-                machineGenerated,
-                confidence,
-                quality,
-                geometry
-            )
-        }
-    }
-
-    @JsonCodec
     case class GeoJSONFeatureCreate(
         geometry: Option[Projected[Geometry]],
         properties: AnnotationPropertiesCreate
-    ) extends OwnerCheck {
-        def toAnnotationCreate(): Annotation.Create = {
-            Annotation.Create(
-                properties.owner,
-                properties.organizationId,
-                properties.label,
-                properties.description,
-                properties.machineGenerated,
-                properties.confidence,
-                properties.quality,
-                geometry
-            )
-        }
-    }
+    ) extends OwnerCheck
 }

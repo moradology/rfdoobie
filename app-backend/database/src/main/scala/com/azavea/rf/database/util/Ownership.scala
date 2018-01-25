@@ -1,8 +1,8 @@
-package com.azavea.rf.database
+package com.azavea.rf.database.util
 
 import com.azavea.rf.datamodel._
 
-object Util {
+object Ownership {
 
   def checkOwner(createUser: User, ownerUserId: Option[String]): String = {
     (createUser, ownerUserId) match {

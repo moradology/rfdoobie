@@ -26,35 +26,4 @@ case class MapToken(
 
 object MapToken {
   def tupled = (MapToken.apply _).tupled
-
-  def create = Create.apply _
-
-  @JsonCodec
-  case class Create(
-    organizationId: UUID,
-    name: String,
-    project: Option[UUID],
-    toolRun: Option[UUID],
-    owner: Option[String]
-  ) extends OwnerCheck {
-    def toMapToken(user: User): MapToken = {
-
-      val id = java.util.UUID.randomUUID()
-      val now = new Timestamp((new java.util.Date()).getTime())
-      val ownerId = checkOwner(user, this.owner)
-
-      MapToken(
-        id,
-        now,
-        user.id,
-        now,
-        user.id,
-        ownerId,
-        this.organizationId,
-        this.name,
-        this.project,
-        this.toolRun
-      )
-    }
-  }
 }

@@ -27,7 +27,19 @@ trait EnumMeta {
   implicit val exportTypeMeta: Meta[ExportType] =
     pgEnumString("ExportType", ExportType.fromString, _.repr)
 
+  implicit val fileTypeMeta: Meta[FileType] =
+    pgEnumString("FileType", FileType.fromString, _.repr)
+
   implicit val thumbnailSizeMeta: Meta[ThumbnailSize] =
     pgEnumString("ThumbnailSize", ThumbnailSize.fromString, _.repr)
+
+  implicit val uploadStatusMeta: Meta[UploadStatus] =
+    pgEnumString("UploadStatus", UploadStatus.fromString, _.repr)
+
+  implicit val uploadTypeMeta: Meta[UploadType] =
+    pgEnumString("UploadType", UploadType.fromString, _.repr)
+
+  implicit val userRoleMeta: Meta[UserRole] =
+    pgEnumString("UserRole", UserRole.fromString, _.repr)
 }
 

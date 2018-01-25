@@ -9,7 +9,7 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 
 trait DBTestConfig extends RFMeta {
 
-  protected val xa: Transactor[IO] =
+  val xa: Transactor[IO] =
     Transactor.after.set(
       Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
@@ -19,6 +19,8 @@ trait DBTestConfig extends RFMeta {
       ),
       HC.rollback
     )
+
+  val transactor = xa
 
 }
 

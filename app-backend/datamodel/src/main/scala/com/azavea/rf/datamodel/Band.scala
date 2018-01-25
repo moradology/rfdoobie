@@ -16,27 +16,7 @@ case class Band(
 )
 
 object Band {//extends RangeUnmarshaler{
-  def create = Create.apply _
-
   def tupled = (Band.apply _).tupled
-
-  @JsonCodec
-  case class Create(
-    name: String,
-    number: Int,
-    wavelength: Array[Int]
-  ) {
-
-    def toBand(imageId: UUID): Band = {
-      Band(
-        UUID.randomUUID,
-        imageId,
-        name,
-        number,
-        wavelength
-      )
-    }
-  }
 
   @JsonCodec
   case class Identified(

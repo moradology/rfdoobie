@@ -89,35 +89,35 @@ object Image {
   }
 
   /** Image class when posted with bands */
-  @JsonCodec
-  case class Banded(
-    organizationId: UUID,
-    rawDataBytes: Long,
-    visibility: Visibility,
-    filename: String,
-    sourceUri: String,
-    owner: Option[String],
-    scene: UUID,
-    imageMetadata: Json,
-    resolutionMeters: Float,
-    metadataFiles: List[String],
-    bands: Seq[Band.Create]
-  ) {
-    def toImage(user: User): Image = {
-      Image.Create(
-        organizationId,
-        rawDataBytes,
-        visibility,
-        filename,
-        sourceUri,
-        scene,
-        imageMetadata,
-        owner,
-        resolutionMeters,
-        metadataFiles
-      ).toImage(user)
-    }
-  }
+  //@JsonCodec
+  //case class Banded(
+  //  organizationId: UUID,
+  //  rawDataBytes: Long,
+  //  visibility: Visibility,
+  //  filename: String,
+  //  sourceUri: String,
+  //  owner: Option[String],
+  //  scene: UUID,
+  //  imageMetadata: Json,
+  //  resolutionMeters: Float,
+  //  metadataFiles: List[String],
+  //  bands: Seq[Band.Create]
+  //) {
+  //  def toImage(user: User): Image = {
+  //    Image.Create(
+  //      organizationId,
+  //      rawDataBytes,
+  //      visibility,
+  //      filename,
+  //      sourceUri,
+  //      scene,
+  //      imageMetadata,
+  //      owner,
+  //      resolutionMeters,
+  //      metadataFiles
+  //    ).toImage(user)
+  //  }
+  //}
 
   @JsonCodec
   case class WithRelated(

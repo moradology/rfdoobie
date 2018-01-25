@@ -32,27 +32,3 @@ case class AOI(
   filters: Json
 )
 
-object AOI {
-
-  def tupled = (AOI.apply _).tupled
-
-  def create = Create.apply _
-
-  case class Create(
-    organizationId: UUID,
-    area: Projected[MultiPolygon],
-    filters: Json,
-    owner: Option[String]) extends OwnerCheck {
-    def toAOI(user: User): AOI = {
-      val now = new Timestamp((new Date()).getTime)
-
-      val ownerId = checkOwner(user, this.owner)
-
-      AOI(
-        UUID.randomUUID, now, user.id, now, user.id,
-        organizationId, ownerId, area, filters
-      )
-    }
-  }
-}
-
