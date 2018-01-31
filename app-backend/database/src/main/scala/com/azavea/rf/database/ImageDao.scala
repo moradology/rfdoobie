@@ -12,10 +12,18 @@ import java.sql.Timestamp
 import java.util.{Date, UUID}
 
 
-object ImageDao {
+object ImageDao extends Dao[Image]("images") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, created_by, modified_at, modified_by, organization_id,
+      owner, raw_data_bytes, visibility, filename, sourceuri, scene,
+      image_metadata, resolution_meters, metadata_files
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Image].unique
+    (selectF ++ fr"WHERE id = $id").query[Image].unique
 
   def create(
     user: User,
@@ -33,8 +41,7 @@ object ImageDao {
     val id = UUID.randomUUID
     val now = new Timestamp((new java.util.Date()).getTime())
     val ownerId = util.Ownership.checkOwner(user, owner)
-    sql"""
-      INSERT INTO images
+    (sql"INSERT INTO" ++ tableF ++ fr"""
         (id, created_at, created_by, modified_at, modified_by, organization_id,
         owner, raw_data_bytes, visibility, filename, sourceuri, scene,
         image_metadata, resolution_meters, metadata_files)
@@ -42,22 +49,11 @@ object ImageDao {
         ($id, $now, ${user.id}, $now, ${user.id}, $organizationId,
         $ownerId, $rawDataBytes, $visibility, $filename, $sourceUri, $scene,
         $imageMetadata, $resolutionMeters, $metadataFiles)
-    """.update.withUniqueGeneratedKeys[Image](
+    """).update.withUniqueGeneratedKeys[Image](
         "id", "created_at", "created_by", "modified_at", "modified_by", "organization_id",
         "owner", "raw_data_bytes", "visibility", "filename", "sourceuri", "scene",
         "image_metadata", "resolution_meters", "metadata_files"
     )
-  }
-
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, created_by, modified_at, modified_by, organization_id,
-        owner, raw_data_bytes, visibility, filename, sourceuri, scene,
-        image_metadata, resolution_meters, metadata_files
-      FROM
-        images
-    """
   }
 }
 

@@ -11,33 +11,30 @@ import java.util.UUID
 import java.sql.Timestamp
 
 
-object OrganizationDao {
+object OrganizationDao extends Dao[Organization]("organizations") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, modified_at, name
+    FROM
+  """ ++ tableF
 
   def create(
     name: String
   ): ConnectionIO[Organization] = {
     val id = UUID.randomUUID()
     val now = new Timestamp((new java.util.Date()).getTime())
-    sql"""
-      INSERT INTO organizations
+    (fr"INSERT INTO" ++ tableF ++ fr"""
         (id, created_at, modified_at, name)
       VALUES
         ($id, $now, $now, $name)
-    """.update.withUniqueGeneratedKeys[Organization](
+    """).update.withUniqueGeneratedKeys[Organization](
       "id", "created_at", "modified_at", "name"
     )
   }
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Organization].unique
+    (selectF ++ fr"WHERE id = $id").query[Organization].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, modified_at, name
-      FROM
-        organizations
-    """
-  }
 }
 

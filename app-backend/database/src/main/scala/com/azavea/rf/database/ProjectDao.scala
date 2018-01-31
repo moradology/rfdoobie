@@ -13,10 +13,20 @@ import java.util.UUID
 import java.sql.Timestamp
 
 
-object ProjectDao {
+object ProjectDao extends Dao[Project]("projects") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, modified_at, organization_id, created_by,
+      modified_by, owner, name, slug_label, description,
+      visibility, tile_visibility, is_aoi_project,
+      aoi_cadence_millis, aois_last_checked, tags, extent,
+      manual_order, is_single_band, single_band_options
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Project].unique
+    (selectF ++ fr"WHERE id = $id").query[Project].unique
 
   def create(
     user: User,
@@ -37,8 +47,7 @@ object ProjectDao {
     val ownerId = util.Ownership.checkOwner(user, owner)
     val slug = Project.slugify(name)
     val userId = user.id
-    sql"""
-      INSERT INTO projects
+    (fr"INSERT INTO" ++ tableF ++ fr"""
         (id, created_at, modified_at, organization_id, created_by,
         modified_by, owner, name, slug_label, description,
         visibility, tile_visibility, is_aoi_project,
@@ -50,26 +59,13 @@ object ProjectDao {
         $visibility, $tileVisibility, $isAOIProject,
         $aoiCadenceMillis, $aoiCadenceMillis, $tags, null,
         TRUE, $isSingleBand, $singleBandOptions)
-    """.update.withUniqueGeneratedKeys[Project](
+    """).update.withUniqueGeneratedKeys[Project](
       "id", "created_at", "modified_at", "organization_id", "created_by",
       "modified_by", "owner", "name", "slug_label", "description",
       "visibility", "tile_visibility", "is_aoi_project",
       "aoi_cadence_millis", "aois_last_checked", "tags", "extent",
       "manual_order", "is_single_band", "single_band_options"
     )
-  }
-
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, modified_at, organization_id, created_by,
-        modified_by, owner, name, slug_label, description,
-        visibility, tile_visibility, is_aoi_project,
-        aoi_cadence_millis, aois_last_checked, tags, extent,
-        manual_order, is_single_band, single_band_options
-      FROM
-        projects
-    """
   }
 }
 

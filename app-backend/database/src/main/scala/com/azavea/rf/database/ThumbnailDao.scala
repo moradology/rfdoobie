@@ -10,19 +10,16 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object ThumbnailDao {
+object ThumbnailDao extends Dao[Thumbnail]("thumbnails") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, modified_at, organization_id, width_px, height_px,
+      scene, url, thumbnail_size
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Thumbnail].unique
-
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, modified_at, organization_id, width_px, height_px,
-        scene, url, thumbnail_size
-      FROM
-        thumbnails
-    """
-  }
+    (selectF ++ fr"WHERE id = $id").query[Thumbnail].unique
 }
 

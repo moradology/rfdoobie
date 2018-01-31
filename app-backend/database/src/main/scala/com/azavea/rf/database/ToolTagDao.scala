@@ -10,19 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object ToolTagDao {
+object ToolTagDao extends Dao[ToolTag]("tool_tags") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, modified_at, created_by, modified_by,
+      organization_id, tag, owner
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[ToolTag].unique
+    (selectF ++ fr"WHERE id = $id").query[ToolTag].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, modified_at, created_by, modified_by,
-        organization_id, tag, owner
-      FROM
-        tool_tags
-    """
-  }
 }
 

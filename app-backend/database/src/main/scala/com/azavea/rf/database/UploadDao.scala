@@ -10,21 +10,19 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object UploadDao {
+object UploadDao extends Dao[Upload]("uploads") {
+
+  val selectF = sql"""
+    SELECT
+       id, created_at, created_by, modified_at, modified_by,
+       organization_id, upload_status, file_type, upload_type,
+       files, datasource, metadata, visibility, owner, project_id,
+       source
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Upload].unique
+    (selectF ++ fr"WHERE id = $id").query[Upload].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-         id, created_at, created_by, modified_at, modified_by,
-         organization_id, upload_status, file_type, upload_type,
-         files, datasource, metadata, visibility, owner, project_id,
-         source
-      FROM
-        uploads
-    """
-  }
 }
 

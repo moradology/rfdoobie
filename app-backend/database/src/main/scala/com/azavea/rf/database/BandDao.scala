@@ -10,10 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object BandDao {
+object BandDao extends Dao[Band]("bands") {
+
+  val selectF =
+    sql"""
+      SELECT
+        id, image_id, name, number, wavelength
+      FROM
+    """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Band].unique
+    (selectF ++ fr"WHERE id = $id").query[Band].unique
 
   def create(
     imageId: UUID,
@@ -22,23 +29,13 @@ object BandDao {
     wavelength: Array[Int]
   ): ConnectionIO[Band] = {
     val id = UUID.randomUUID
-    sql"""
-      INSERT INTO bands
+    (fr"INSERT INTO" ++ tableF ++ fr"""
         (id, image_id, name, number, wavelength)
       VALUES
         ($id, $imageId, $name, $number, $wavelength)
-    """.update.withUniqueGeneratedKeys[Band](
+    """).update.withUniqueGeneratedKeys[Band](
       "id", "image_id", "name", "number", "wavelength"
     )
-  }
-
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, image_id, name, number, wavelength
-      FROM
-        bands
-    """
   }
 }
 

@@ -10,19 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object ToolRunDao {
+object ToolRunDao extends Dao[ToolRun]("tool_runs") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, created_by, modified_at, modified_by, visibility,
+      organization, execution_parameters, owner, name
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[ToolRun].unique
+    (selectF ++ fr"WHERE id = $id").query[ToolRun].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, created_by, modified_at, modified_by, visibility,
-        organization, execution_parameters, owner, name
-      FROM
-        tool_runs
-    """
-  }
 }
 

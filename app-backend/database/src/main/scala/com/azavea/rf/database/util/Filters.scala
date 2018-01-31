@@ -41,14 +41,14 @@ object Filters {
     List(f1, f2, f3, f4, f5)
   }
 
-  def filterToSharedIfNotInRoot(user: User): Option[Fragment] = {
+  def filterToSharedIfNotInRoot(user: User): List[Option[Fragment]] = {
     val filter =
       if (!user.isInRootOrganization) {
         Some(fr"organizationId = ${user.organizationId}")
       } else {
         None
       }
-    filter
+    List(filter)
   }
 }
 

@@ -10,19 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object UserDao {
+object UserDao extends Dao[User]("users") {
+
+  val selectF = sql"""
+    SELECT
+      id, organization_id, role, created_at, modified_at,
+      dropbox_credential, planet_credential, email_notifications
+    FROM
+  """ ++ tableF
 
   def select(id: String) =
-    (Statements.select ++ fr"WHERE id = $id").query[User].unique
+    (selectF ++ fr"WHERE id = $id").query[User].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, organization_id, role, created_at, modified_at,
-        dropbox_credential, planet_credential, email_notifications
-      FROM
-        users
-    """
-  }
 }
 

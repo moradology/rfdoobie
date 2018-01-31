@@ -10,19 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object ShapeDao {
+object ShapeDao extends Dao[Shape]("shapes") {
+
+  val selectF = sql"""
+    SELECT
+      id, created_at, created_by, modified_at, modified_by, owner,
+      organization_id, name, description, geometry
+    FROM
+  """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[Shape].unique
+    (selectF ++ fr"WHERE id = $id").query[Shape].unique
 
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, created_by, modified_at, modified_by, owner,
-        organization_id, name, description, geometry
-      FROM
-        shapes
-    """
-  }
 }
 

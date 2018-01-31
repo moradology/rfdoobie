@@ -26,7 +26,7 @@ lazy val commonSettings = Seq(
   ),
   resolvers ++= Seq(
     //Resolver.sonatypeRepo("snapshots"),
-    //Resolver.bintrayRepo("lonelyplanet", "maven"),
+    Resolver.bintrayRepo("lonelyplanet", "maven"),
     //Resolver.bintrayRepo("guizmaii", "maven"),
     //Resolver.bintrayRepo("kwark", "maven"), // Required for Slick 3.1.1.2, see https://github.com/azavea/raster-foundry/pull/1576
     "locationtech-releases" at "https://repo.locationtech.org/content/groups/releases",
@@ -87,7 +87,8 @@ lazy val database = Project("database", file("database"))
        Dependencies.doobiePostgres,
        "net.postgis" % "postgis-jdbc" % "2.2.1",
        "net.postgis" % "postgis-jdbc-jtsparser" % "2.2.1",
-       "org.locationtech.jts" % "jts-core" % "1.15.0"
+       "org.locationtech.jts" % "jts-core" % "1.15.0",
+       "com.lonelyplanet" %% "akka-http-extensions" % "0.4.15"
      )
   })
 

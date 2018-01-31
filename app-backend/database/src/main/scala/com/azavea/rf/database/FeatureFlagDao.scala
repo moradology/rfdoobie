@@ -10,18 +10,17 @@ import cats._, cats.data._, cats.effect.IO, cats.implicits._
 import java.util.UUID
 
 
-object FeatureFlagDao {
+object FeatureFlagDao extends Dao[FeatureFlag]("feature_flags") {
 
-  def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[FeatureFlag].unique
-
-  object Statements {
-    val select = sql"""
+  def selectF =
+    fr"""
       SELECT
         id, key, active, name, description
       FROM
-        feature_flags
-    """
-  }
+    """ ++ tableF
+
+  def select(id: UUID) =
+    (selectF ++ fr"WHERE id = $id").query[FeatureFlag].unique
+
 }
 

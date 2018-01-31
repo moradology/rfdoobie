@@ -11,10 +11,18 @@ import java.sql.Timestamp
 import java.util.{Date, UUID}
 
 
-object MapTokenDao {
+object MapTokenDao extends Dao[MapToken]("map_tokens") {
+
+  val selectF =
+    sql"""
+      SELECT
+        id, created_at, created_by, modified_at, modified_by,
+        owner, organization_id, name, project_id, toolrun_id
+      FROM
+    """ ++ tableF
 
   def select(id: UUID) =
-    (Statements.select ++ fr"WHERE id = $id").query[MapToken].unique
+    (selectF ++ fr"WHERE id = $id").query[MapToken].unique
 
   def create(
     user: User,
@@ -27,27 +35,16 @@ object MapTokenDao {
     val id = UUID.randomUUID
     val now = new Timestamp((new java.util.Date()).getTime())
     val ownerId = util.Ownership.checkOwner(user, owner)
-    sql"""
-      INSERT INTO map_tokens
+    (fr"INSERT INTO" ++ tableF ++ fr"""
         (id, created_at, created_by, modified_at, modified_by,
         owner, organization_id, name, project_id, toolrun_id)
       VALUES
         ($id, $now, ${user.id}, $now, ${user.id},
         $ownerId, $organizationId, $name, $project, $toolRun)
-    """.update.withUniqueGeneratedKeys[MapToken](
+    """).update.withUniqueGeneratedKeys[MapToken](
       "id", "created_at", "created_by", "modified_at", "modified_by",
       "owner", "organization_id", "name", "project_id", "toolrun_id"
     )
-  }
-
-  object Statements {
-    val select = sql"""
-      SELECT
-        id, created_at, created_by, modified_at, modified_by,
-        owner, organization_id, name, project_id, toolrun_id
-      FROM
-        map_tokens
-    """
   }
 }
 
